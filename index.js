@@ -55,7 +55,7 @@ app.post("/usuarioIncompleto", async(req,res) =>{
 
 app.post("/usuarioCompleto", async(req,res) =>{
     try {
-        await pool.query("INSERT INTO USUARIO(NOME, SOBRENOME, NASCIMENTO, EMAIL, SENHA, TELEFONE, CEP, CIDADE, ESTADO, BIOGRAFIA) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", 
+        await pool.query("INSERT INTO USUARIO(NOME, SOBRENOME, NASCIMENTO, EMAIL, SENHA, TELEFONE, CEP, CIDADE, ESTADO, BIOGRAFIA) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)" ,
         [req.body.nome, req.body.sobrenome, req.body.nascimento, req.body.email, req.body.senha, req.body.telefone,
             req.body.cep, req.body.cidade, req.body.estado, req.body.biografia]);
     } catch (err) {
