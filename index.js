@@ -20,6 +20,8 @@ app.use(cors());
 app.use(express.json());
 app.get("/")
 
+app.use('/uploads', express.static(__dirname + '/files'));
+
 app.get("/usuarios", async(req,res) =>{
     try {
         const Usuarios = await pool.query("SELECT * FROM USUARIO;");
