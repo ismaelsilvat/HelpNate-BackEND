@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.get("/")
 
-app.use('/uploads', express.static(__dirname + '/files'));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.get("/usuarios", async(req,res) =>{
     try {
