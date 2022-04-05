@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const pool = require('./db');
 const multer = require('multer');
-
+const PORT = process.env.PORT || 5000;
 
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
@@ -18,7 +18,7 @@ const upload = multer({storage});
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(__dirname + '/uploads'));
+app.get("/")
 
 app.get("/usuarios", async(req,res) =>{
     try {
@@ -48,14 +48,6 @@ app.get("/usuarios/:id", async(req,res) =>{
     }
 });
 
-app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
-    try {               
-        await pool.query('UPDATE USUARIO SET FOTO_PERFIL = $1 WHERE IDUSUARIO = $2',[req.file.filename, req.body.id]);
-    } catch (error) {
-        console.log(error.message);
-    }
-});
-
 app.get("/anuncios/:id", async(req,res) =>{
     try {
         const { id } = req.params;
@@ -63,6 +55,14 @@ app.get("/anuncios/:id", async(req,res) =>{
         res.json(Anuncio.rows)
     } catch (err) {
         console.error(err.message);
+    }
+});
+
+app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
+    try {          
+        await pool.query('UPDATE USUARIO SET FOTO_PERFIL = $1 WHERE IDUSUARIO = $2',[req.file.filename, req.body.id]);
+    } catch (error) {
+        console.log(error.message);
     }
 });
 
@@ -96,6 +96,6 @@ app.post("/anuncio", async(req,res) =>{
     }
 });
 
-app.listen(5000, () =>{
-    console.log(`Server started at port: ${5000}!`);
+app.listen(PORT, () =>{
+    console.log(`TO CONECTADO AQUI MEU! PORTA: ${PORT}`);
 });
