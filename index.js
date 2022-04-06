@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: (req,file,cb) => {
-        cb(null, Date.now()+'_'+file.originalname)
+        cb(null, Date.now()+'-'+file.originalname);
     }
 });
 
@@ -18,9 +18,8 @@ const upload = multer({storage});
 
 app.use(cors());
 app.use(express.json());
-app.get("/")
-
 app.use('/uploads', express.static(__dirname + '/uploads'));
+app.get("/");
 
 app.get("/usuarios", async(req,res) =>{
     try {
