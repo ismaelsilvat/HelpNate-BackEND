@@ -64,7 +64,7 @@ app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
     try {          
         console.log(req.file);
         console.log(req.body);
-        await pool.query('UPDATE USUARIO SET FOTO_PERFIL = $1 WHERE IDUSUARIO = $2',[req.file.filename, req.body.id]);
+        await pool.query(`UPDATE USUARIO SET FOTO_PERFIL = ${req.file.filename} WHERE IDUSUARIO = ${req.body.id}`);
     } catch (error) {
         console.log(error.message);
     }
