@@ -63,7 +63,7 @@ app.get("/anuncios/:id", async(req,res) =>{
 app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
     try {          
         console.log(req.file);
-        console.log(req.body);
+        console.log(req.body.id);
         await pool.query(`UPDATE USUARIO SET FOTO_PERFIL = ${req.file.filename} WHERE IDUSUARIO = ${req.body.id}`);
     } catch (error) {
         console.log(error.message);
