@@ -73,6 +73,7 @@ app.post("/imagensPost", upload.array('imgs'), async(req,res) =>{
     try {          
         console.log(req.files);
         console.log(req.body);
+        await pool.query('UPDATE ANUNCIO SET FOTO_1 = $1, FOTO_2 = $2, FOTO_3 = $3 WHERE IDANUNCIO = $4',[req.files[0].filename,req.files[1].filename, req.files[2].filename, req.body.id]);
     } catch (error) {
         console.log(error.message);
     }
@@ -101,8 +102,9 @@ app.post("/usuarioCompleto", async(req,res) =>{
 
 app.post("/anuncio", async(req,res) =>{
     try {
-        await pool.query("INSERT INTO ANUNCIO(SITUACAO, TITULO, IDUSUARIO, DESCRICAO, CATEGORIA, DATA_POST) VALUES($1, $2, $3, $4, $5, $6)", 
+        let response = await pool.query("INSERT INTO ANUNCIO(SITUACAO, TITULO, IDUSUARIO, DESCRICAO, CATEGORIA, DATA_POST) VALUES($1, $2, $3, $4, $5, $6) RETURNING IDANUNCIO;", 
         [req.body.SITUACAO, req.body.TITULO, req.body.IDUSUARIO, req.body.DESCRICAO, req.body.CATEGORIA, req.body.DATA_POST]);
+        res.json(response.rows)
     } catch (err) {
         console.error(err.message);
     }
