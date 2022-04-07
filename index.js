@@ -71,8 +71,9 @@ app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
 
 app.post("/usuarioIncompleto", async(req,res) =>{
     try {
-        await pool.query("INSERT INTO USUARIO(NOME, SOBRENOME, NASCIMENTO, EMAIL, SENHA, TELEFONE) VALUES($1, $2, $3, $4, $5, $6)", 
+        let novoUsuario = await pool.query("INSERT INTO USUARIO(NOME, SOBRENOME, NASCIMENTO, EMAIL, SENHA, TELEFONE) VALUES($1, $2, $3, $4, $5, $6) RETURNING IDUSUARIO;", 
         [req.body.nome, req.body.sobrenome, req.body.nascimento, req.body.email, req.body.senha, req.body.telefone]);
+        res.json(novoUsuario.rows)
     } catch (err) {
         console.error(err.message);
     }
