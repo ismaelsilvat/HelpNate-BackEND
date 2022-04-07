@@ -92,9 +92,9 @@ app.post("/usuarioCompleto", async(req,res) =>{
 
 app.post("/anuncio", async(req,res) =>{
     try {
-        const { titulo } = req.body;
-        const { doador } = req.body
-        await pool.query("INSERT INTO ANUNCIO(TITULO, IDUSUARIO) VALUES($1, $2)", [titulo, doador]);
+        const { SITUACAO, IDUSUARIO, TITULO, DESCRICAO, CATEGORIA, DATA_POST} = req.body;
+        await pool.query("INSERT INTO ANUNCIO(SITUACAO, TITULO, IDUSUARIO, TITULO, DESCRICAO, CATEGORIA, DATA_POST) VALUES($1, $2)", 
+        [SITUACAO, TITULO, IDUSUARIO, DESCRICAO, CATEGORIA, DATA_POST]);
     } catch (err) {
         console.error(err.message);
     }
