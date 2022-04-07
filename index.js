@@ -69,6 +69,15 @@ app.post("/imagemPerfil", upload.single('img'), async(req,res) =>{
     }
 });
 
+app.post("/imagensPost", upload.array('imgs'), async(req,res) =>{
+    try {          
+        console.log(req.files);
+        console.log(req.body);
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
 app.post("/usuarioIncompleto", async(req,res) =>{
     try {
         let novoUsuario = await pool.query("INSERT INTO USUARIO(NOME, SOBRENOME, NASCIMENTO, EMAIL, SENHA, TELEFONE) VALUES($1, $2, $3, $4, $5, $6) RETURNING IDUSUARIO;", 
